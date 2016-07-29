@@ -14,12 +14,10 @@
 
 	#test
         $username = $_SESSION['username'];
-        $query = "SELECT id FROM user_info WHERE username = $username ORDER BY id DESC LIMIT 1";
+        $query = "SELECT id FROM user_info WHERE username = '$username' ORDER BY id DESC LIMIT 1";
         $result = mysqli_query($connection, $query);
 	$value = mysqli_fetch_array($result);
 	$valueId = $value['id'];
-	echo get_resource_type($result);
-	echo get_resource_type($value);
         echo ("You are id number {$valueId}"); 
 ?>
 

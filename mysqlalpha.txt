@@ -2,11 +2,11 @@ MYSQL Commands for forum DB
 
 <!-- Create table for forum data. -->
 CREATE TABLE forumPost (id INT(3) NOT NULL AUTO_INCREMENT, subforum varchar(100) NOT NULL,  
-threadPost_id INT(3) NOT NULL, subject varchar(100) NOT NULL, text NVARCHAR(MAX) NOT NULL);
+threadPost_id INT(3) NOT NULL, subject varchar(100) NOT NULL, text NVARCHAR(4000) NOT NULL, PRIMARY KEY (id) );
 
 
 <!-- Create table for thread based results. -->
-CREATE TABLE threadPost (id INT(3) NOT NULL AUTO_INCREMENT, author varchar(100) NOT NULL);  
+CREATE TABLE threadPost (id INT(3) NOT NULL AUTO_INCREMENT, author varchar(100) NOT NULL, PRIMARY KEY (id) );  
 
 
 

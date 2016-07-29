@@ -78,4 +78,57 @@
 		mysqli_close($connection); 	
 		return $output;
 	}
+	
+	#New thread 
+	function newThread($nSub) {
+		#Check for submission $_POST data.
+		if(isset($_POST['nSub'])) {
+			#Sign into mysql.
+		        $connection = mysqli_connect("localhost", "forum", "HarvardFan46", "forum_app");
+        		if (mysqli_connect_errno()) {
+                		die("Database connection failed: " . mysqli_connect_error() .
+                		" (" . mysqli_connect_errno() . ")" );
+                	}
+
+                	#Increment threadId and add username data.
+                	$query = "INSERT INTO threadPost (author)
+                        	 VALUES ('{$_SESSION['username']}')";
+                	$threadResult = mysqli_query($connection, $query);
+                	if (!$threadResult) {
+                       		die("Database query failed. " . mysqli_error($connection));
+                	}
+
+                	#Find out the id of the current post.
+			#Get username from SESSION data.
+			$username = $_SESSION['username'];
+                	$query = "SELECT id FROM threadPost WHERE author = '$username' ORDER BY id DESC LIMIT 1";
+                	$idResult = mysqli_query($connection, $query);
+                	$idValueArray = mysqli_fetch_array($idResult);
+                	$idValue = $idValueArray['id'];
+                	if (!$idResult) {
+                     		die("Database query failed. " . mysqli_error($connection));
+                	}
+
+                	#Add post to forumPost with the Thread_id field.
+                	#Add nSubIn and nForumIn variables.
+                	$nSubIn = mysqli_real_escape_string($connection, $_POST['nSubIn']);
+                	$nForumIn = mysqli_real_escape_string($connection, $_POST['nForumIn']);
+                	$query = "INSERT INTO forumPost (subforum, threadPost_id, subject, text)
+                        	VALUES ('$subforum', '$idValue', '$nSubIn', '$nForumIn' )";
+                	$forumResult = mysqli_query($connection, $query);
+                	if (!$forumResult) {
+                     		die("Database query failed. " . mysqli_error($connection));
+                	} else {
+				$output .= "Succesfully added to the forum!";
+			}
+
+
+                }
+		return $output;
+	}
+
+	#Reply 
+	function replyPost($ ) {
+		
+	}
 ?>
