@@ -67,6 +67,7 @@
                         	if (!$result) {
                                 	die("Database query failed. " . mysqli_error($connection));
                         	}
+				$_SESSION['username'] = $user_in;
                         	redirect("signedUp.php");
 
                 	} else {
