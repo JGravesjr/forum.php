@@ -1,0 +1,25 @@
+MYSQL Commands for forum DB
+
+<!-- Create table for forum data. -->
+CREATE TABLE forumPost (id INT(3) NOT NULL AUTO_INCREMENT, subforum varchar(100) NOT NULL,  
+threadPost_id INT(3) NOT NULL, subject varchar(100) NOT NULL, text NVARCHAR(MAX) NOT NULL);
+
+
+<!-- Create table for thread based results. -->
+CREATE TABLE threadPost (id INT(3) NOT NULL AUTO_INCREMENT, author varchar(100) NOT NULL);  
+
+
+
+
+
+
+Thread Tech 
+	Form for taking in a new thread post. 
+		Info to take: Username(Author), thread_id, user_info_id
+	Tech for making new links for every thread
+		
+	
+Show Thread Tech
+	Tech for making refnum linked to all posts made on a thread	
+	Tech for making links attached to refNum
+Bring in user data
