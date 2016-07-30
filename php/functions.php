@@ -119,7 +119,7 @@
                 	if (!$forumResult) {
                      		die("Database query failed. " . mysqli_error($connection));
                 	} else {
-				$output .= "Succesfully added to the forum!";
+				redirect("threadView.php?id=$idValue");	
 			}
 
 
@@ -128,7 +128,7 @@
 	}
 
 	#Reply 
-	function replyPost($ ) {
+#	function replyPost($ ) {
 		
-	}
+#	}
 ?>
