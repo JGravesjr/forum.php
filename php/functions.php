@@ -15,31 +15,23 @@
 
 		#Adding an output variable for screen output.
 		$output = "";	
-        
-		#Validate sign in against forum_app.
-        	$query = "SELECT * FROM user_info;";
-        	$result = mysqli_query($connection, $query);
-
-        	#Kills the page if no result from database.
-        	if (!$result) {
-               		die("Database query failed.");
-        	}
 
         	#Checking for signIn $_POST data.
         	if (isset($_POST['signIn'])) {
-                	#While loop cycles through whole list looking for a match.
-                	$match = 0; 
-                	while($row = mysqli_fetch_array($result)) {
-                        	$username = $row['username'];
-                        	$password = $row['password'];
-                        	if ($user_in === $username && $pass_in === $password) {
-                                	$match ++;
-                        	}
-                	}
-        
-                	#If statement looks at different match values.
-                	if ($match == 1) {
-                        	$_SESSION['username'] = $user_in;
+		        #Validate sign in against forum_app.
+                	$query = "SELECT username FROM user_info WHERE username = '$user_in' and password = '$pass_in' LIMIT 1;";
+                	$result = mysqli_query($connection, $query);
+			$row = mysqli_fetch_array($result);
+			$username = $row[0];
+
+                	#Kills the page if no result from database.
+                	if (!$result) {
+        	                die("Database query failed.");
+	                }
+
+                	#Check for match.
+                	if ($user_in == $username) {
+                        	$_SESSION['username'] = $username;
 				redirect("signedIn.php");
                 	} else {
                         	$output .= "Try again!";
@@ -49,17 +41,19 @@
 
         	#Checking for signUp $_POST data. Query string still has the needed information, no need to reset. 
         	if (isset($_POST['signUp'])){
-                	#While loop cycles through whole list looking for a match.
-               		$match = 0;
-                	while($row = mysqli_fetch_array($result)) {
-                        	$username = $row['username'];
-                        	if ($user_in === $username) {
-                                	$match ++;
-                        	}
-                	}
+                	#Validate sign in against forum_app.
+                	$query = "SELECT username FROM user_info WHERE username = '$user_in' LIMIT 1;";
+                	$result = mysqli_query($connection, $query);
+			$row = mysqli_fetch_array($result);
+			$username = $row[0];
+
+                	#Kills the page if no result from database.
+                	if (!$result) {
+        	                die("Database query failed.");
+	                }
 
                 	#If statement looks at different match values.
-                	if ($match == 0) {
+                	if ($user_in != $username) {
                         	#Insert into user_info
                         	$query = "INSERT INTO user_info (username, password)
                                 	VALUES ('{$user_in}', '{$pass_in}')";

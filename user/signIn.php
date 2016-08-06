@@ -11,13 +11,6 @@
 
 	#Sign in function.
 	echo user_information($userIn, $passIn);
-
-	#Test
-	$username = $_SESSION['username'];
-	$query = "SELECT id FROM user_info WHERE username = $username 
-                  ORDER BY id DESC LIMIT 1";
-	$result = mysqli_query($connection, $query);
-	var_dump($result);	
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
