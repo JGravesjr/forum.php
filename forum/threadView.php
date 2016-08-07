@@ -12,7 +12,7 @@
 	#Start session.
 	session_start();
 
-	#Assign a value to $_GET value.
+	#Assign a variable to $_GET data.
 	$threadId = $_GET['id'];
         #Connecting to the Forum_app database.
         $connection = mysqli_connect("localhost", "forum", "HarvardFan46", "forum_app");
@@ -29,6 +29,12 @@
         if (!$threadResult) {
 	        die("Database query failed. " . mysqli_error($connection));
         }
+
+	#Create output table. 
+	$threadOutput .= "<table>";
+	$threadOutput .= "<tr>";
+	$threadOutput .= "<th>Subject</th>";
+	$threadOutput .= "<th>Response</th>";
         $match = 1;
 	while ($threadRow = mysqli_fetch_array($threadResult)){
         	#Getting the first subject value for the title.
@@ -39,14 +45,16 @@
 		#Adding posts to threadOutput
 		$subValue = $threadRow['subject'];
 		$textValue = $threadRow['text'];
-                $threadOutput .=  
-"<pre>{$subValue} <br> 
-	{$textValue} <br></pre>";
+                $threadOutput .= "<tr>";
+		$threadOutput .= "<td class='subject'>" . $subValue . "</td>"; 
+		$threadOutput .= "<td>" . $textValue . "</td>";
+		$threadOutput .= "</tr>"; 
         }
-	
+	$threadOutput .= "</table>";
+
         #Reply to a thread
         if (isset($_POST['nReply'])) {
-              #Connect to mysql server.
+                #Connect to mysql server.
                 $connection = mysqli_connect("localhost", "forum", "HarvardFan46", "forum_app");
                 if (mysqli_connect_errno()) {
                 die("Database connection failed: " . mysqli_connect_error() .
@@ -63,7 +71,7 @@
                 if (!$forumResult) {
                       die("Database query failed. " . mysqli_error($connection));
                 }
-	redirect("threadView.php?id=$threadId"); 
+		redirect("threadView.php?id=$threadId"); 
 	}
 
 ?>
@@ -72,6 +80,9 @@
 <html lang="en">
 	<head>
 		<title><?php echo $subHeader; ?></title>
+		<style> .subject {font-size: 12px;
+			border-right: thin solid #ff0000;
+			border-top: thin solid #ff0000;}</style>
 	</head>
 	<body>
 		<!-- Link back to forum view -->
